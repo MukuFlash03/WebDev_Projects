@@ -13,6 +13,7 @@
 
 
 // Source: https://css-tricks.com/build-word-counter-app/
+// https://github.com/lalwanivikas/lalwanivikas.github.io/tree/master/projects
 
 "use strict";
 var input = document.querySelectorAll('textarea')[0],
