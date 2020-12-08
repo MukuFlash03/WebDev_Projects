@@ -155,13 +155,61 @@ readability.addEventListener('click', function() {
   // placeholder until the API returns the score  
   readability.innerHTML = "Fetching score...";
 
-  var requestUrl = "https://ipeirotis-readability-metrics.p.mashape.com/getReadabilityMetrics?text=";
+  /*
+  const data = input.value;
+  const requestUrl = "https://ipeirotis-readability-metrics.p.rapidapi.com/getReadabilityMetrics?text=";
+
+  const xhr = new XMLHttpRequest();
+  xhr.withCredentials = true;
+  
+  
+  xhr.open("POST", (requestUrl + data), true);
+  xhr.setRequestHeader("x-rapidapi-key", "f16378c236msh05ec3ac5c19c766p18a102jsn0384c7a71463");
+  xhr.setRequestHeader("x-rapidapi-host", "ipeirotis-readability-metrics.p.rapidapi.com");
+  
+  xhr.send(data);
+
+  xhr.addEventListener("readystatechange", function () {
+    if (this.readyState === this.DONE) {
+      // readability.innerHTML = readingEase(JSON.parse(this.response).FLESCH_READING);
+      console.log(this.responseText);
+      readability.innerHTML = this.responseText;
+    }
+  });
+
+  
+  xhr.onload = function() {
+     if (this.status >= 200 && this.status < 400) {
+      // Success!
+      readability.innerHTML = readingEase(JSON.parse(this.response).FLESCH_READING);
+    } else {
+      // We reached our target server, but it returned an error
+      readability.innerHTML = "Server Error.";
+    }
+  };
+
+
+  xhr.onerror = function() {
+    // There was a connection error of some sort
+    readability.innerHTML = "Connection Error.";
+  };
+  
+
+});
+*/
+
+
+  
+
+  var requestUrl = "https://ipeirotis-readability-metrics.p.rapidapi.com/getReadabilityMetrics?text=";
   var data = input.value;
 
   var request = new XMLHttpRequest();
   request.open('POST', encodeURI(requestUrl + data), true);
-  request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
-  request.setRequestHeader("X-Mashape-Authorization", "f16378c236msh05ec3ac5c19c766p18a102jsn0384c7a71463");
+  request.setRequestHeader("x-rapidapi-key", "f16378c236msh05ec3ac5c19c766p18a102jsn0384c7a71463");
+  request.setRequestHeader("x-rapidapi-host", "ipeirotis-readability-metrics.p.rapidapi.com");
+  //request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+  //request.setRequestHeader("X-Mashape-Authorization", "f16378c236msh05ec3ac5c19c766p18a102jsn0384c7a71463");
   request.send();
 
   request.onload = function() {
@@ -170,15 +218,17 @@ readability.addEventListener('click', function() {
       readability.innerHTML = readingEase(JSON.parse(this.response).FLESCH_READING);
     } else {
       // We reached our target server, but it returned an error
-      readability.innerHTML = "Not available.";
+      readability.innerHTML = "Server Error";
     }
   };
 
   request.onerror = function() {
     // There was a connection error of some sort
-    readability.innerHTML = "Not available.";
+    readability.innerHTML = "Connection Error";
   };
 });
+
+
 
 // function to convert FLESCH READING SCORE into meaningful string.
 function readingEase(num) {
