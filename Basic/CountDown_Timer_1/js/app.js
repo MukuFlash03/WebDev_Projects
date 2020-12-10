@@ -10,7 +10,7 @@ year.innerHTML = getNewYear().getFullYear();
 
 const app = document.querySelector('.countdown-timer');
 const message = document.querySelector('.message');
-const heading = document.querySelector('.h1');
+const heading = document.querySelector('h1');
 
 
 const format = ( (t) => {
@@ -18,7 +18,7 @@ const format = ( (t) => {
 });
 
 
-const render = (time) => {
+const render = ( (time) => {
     app.innerHTML = `
         <div class="count-down">
             <div class="timer">
@@ -39,7 +39,7 @@ const render = (time) => {
             </div>
         </div>
         `;
-};
+});
 
 
 const showMessage = ( () => {
@@ -48,15 +48,14 @@ const showMessage = ( () => {
     heading.style.display = 'none';
 });
 
-
 const hideMessage = ( () => {
     message.innerHTML = '';
     heading.style.display = 'block';
 })
 
-
 const complete = ( () => {
     showMessage();
+    
      // restart the countdown after showing the 
     // greeting message for a day ()
     setTimeout( () => {
@@ -64,6 +63,5 @@ const complete = ( () => {
         countdownTimer.setExpiredDate(getNewYear());
     }, 1000*60*24);
 });
-
 
 const countdownTimer = new CountDown(getNewYear(), render, complete);

@@ -1,5 +1,6 @@
 class CountDown {
     constructor(expiredDate, onRender, onComplete) {
+        this.setExpiredDate(expiredDate);
         this.onRender = onRender;
         this.onComplete = onComplete;
     }
@@ -8,7 +9,8 @@ class CountDown {
         const currentTime = new Date().getTime();
         this.timeRemaining = expiredDate.getTime() - currentTime;
 
-        this.timeRemaining > 0? this.start() : this.onComplete();
+        this.timeRemaining > 0? 
+            this.start() : this.onComplete();
     }
 
     complete() {
