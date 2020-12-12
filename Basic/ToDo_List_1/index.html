@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    <link rel="stylesheet" href='style.css'>
+</head>
+
+<body>
+    <div class="header">
+        <h2 style="margin:5px">To Do List</h2>
+        <input type="text" id="myInput" placeholder="Title...">
+        <span onclick="newElement()" class="addBtn">Add</span>
+    </div>
+
+    <ul id="myUL">
+        <li class="checked">Go through DataFlair's Javascript tutorials</li>
+        <li>Practise the codes</li>
+        <li class="checked">Read a book on Self-Care</li>
+        <li>Practise fingerstyle guitar</li>
+        <li>Create JS projects</li>
+    </ul>
+
+    <button type="button" id="clear-list" onclick="removeAll()">Clear Items</button>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
