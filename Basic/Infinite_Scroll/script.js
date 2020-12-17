@@ -5,13 +5,14 @@
 
 ( function () {
 
-    const quotesEL = document.querySelector('.quotes');
-    const loader = document.querySelector('.loader');
+    const quotesEl = document.querySelector('.quotes');
+    const loaderEl = document.querySelector('.loader');
 
     const getQuotes = async (page, limit) => {
-        const API_URL = 'https://api.javascripttutorial.net/v1/quotes/?page=1&limit=10'
+        const API_URL = `https://api.javascripttutorial.net/v1/quotes/?page=${page}&limit=${limit}`;
         const response = await fetch(API_URL);
 
+        // To handle Error 404
         if (!response.ok) {
             throw new Error(`An error occurred: ${response.status}`);
         }
@@ -52,11 +53,11 @@
     let total = 0;
 
     const hideLoader = ( () => {
-        loader.classList.remove('show');
+        loaderEl.classList.remove('show');
     });
 
     const showLoader = ( () => {
-        loader.classList.add('show');
+        loaderEl.classList.add('show');
     });
 
     const hasMoreQuotes = ( (page, limit, total) => {
@@ -67,6 +68,7 @@
     const loadQuotes = async (page, limit) => {
         showLoader();
 
+        // 0.75 sec later
         setTimeout ( async () => {
 
             try {
@@ -101,7 +103,7 @@
         passive: true
     });
 
+    // initialize
     loadQuotes(currentPage, limit);
 
 })();
-
