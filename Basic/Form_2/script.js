@@ -20,137 +20,7 @@ const confirmPasswordEl = document.querySelector('#confirm-password');
 
 const form = document.querySelector('#signup');
 
-
-const debounce = ( (fn, delay = 500) => {
-
-    let timeoutId;
-
-    return ( (...args) => {
-
-        // Cancel previous timer
-        if (timeoutId)
-            clearTimeout(timeoutId);
-
-        
-        timeoutId = setTimeout( () => {
-            fn.apply(null, args)
-        }, delay);
-    
-    });
-});
-
-form.addEventListener('input', debounce((e) => {
-    switch(e.target.id) {
-        case 'username': 
-            checkUsername();
-            break;
-
-        case 'email':
-            checkEmail();
-            break;
-        
-        case 'password':
-            checkPassword();
-            break;
-
-        case 'confirm-password':
-            checkConfirmPassword();
-            break;
-    }
-}));
-
-
-form.addEventListener('submit', (e) => {
-    
-    // prevent the form from submitting
-    e.preventDefault();
-
-    // validate forms
-    let isUsernameValid = checkUsername(),
-        isEmailValid = checkEmail(),
-        isPasswordValid = checkPassword(),
-        isConfirmPasswordValid = checkConfirmPassword();
-
-    let isFormValid = isUsernameValid &&
-        isEmailValid &&
-        isPasswordValid &&
-        isConfirmPasswordValid;
-
-    // submit to the server if the form is valid
-    if (isFormValid) {
-        // not covered in this tutorial
-    }
-});
-
-
 // Functions to check input data validity
-
-// returns false if the input argument is empty
-const isRequired = ( (value) => {
-    value === '' ? false : true;
-});
-
-// returns false if the length argument is not between the min and max argument:
-const isBetweenLen = ( (length, min, max) => {
-    length < min || length > max ? false : true;
-});
-
-// check email validity using regex
-const isEmailValid = ( (email) => {
-    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(email);
-});
-
-
-// check password strength with regex
-/*
-^	                The password starts
-(?=.*[a-z])	        The password must contain at least one lowercase character
-(?=.*[A-Z])	        The password must contain at least one uppercase character
-(?=.*[0-9])	        The pasword must contain at least one number
-(?=.*[!@#$%^&*])	The password must contain at least one special character.
-(?=.{8,})	        The password must be eight characters or longer
-
-*/
-
-const isPasswordSecure = ( (password) => {
-    const re = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})");
-    return re.test(password);
-});
-
-
-// highlights the border of the input field and displays 
-// an error message if the input field is invalid:
-
-const showError = ( (input, message) => {
-
-    // get the parent element of the input field which
-    // is the <div> element that contains the form-field class
-    const formField = input.parentElement;
-
-    // remove success class and add error class to HTML element
-    formField.classList.remove('success');
-    formField.classList.add('error');
-
-    const error = formField.querySelector('small');
-    error.textContent = message;
-});
-
-const showSuccess = ( (input) => {
-
-     // get the parent element of the input field which
-    // is the <div> element that contains the form-field class
-    const formField = input.parentElement;
-
-    // remove error class and add success class to HTML element
-    formField.classList.remove('error');
-    formField.classList.add('success');
-
-    // hide the error message
-    const error = formField.querySelector('small');
-    error.textContent = '';
-});
-
 
 const checkUsername = ( () => {
 
@@ -233,4 +103,119 @@ const checkConfirmPassword = ( () => {
     return valid;
 });
 
+// check email validity using regex
+const isEmailValid = ( (email) => {
+    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(email);
+});
 
+
+// check password strength with regex
+/*
+^	                The password starts
+(?=.*[a-z])	        The password must contain at least one lowercase character
+(?=.*[A-Z])	        The password must contain at least one uppercase character
+(?=.*[0-9])	        The pasword must contain at least one number
+(?=.*[!@#$%^&*])	The password must contain at least one special character.
+(?=.{8,})	        The password must be eight characters or longer
+
+*/
+
+const isPasswordSecure = ( (password) => {
+    const re = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})");
+    return re.test(password);
+});
+
+// returns false if the input argument is empty
+const isRequired = ( (value) => {
+    return value === '' ? false : true;
+});
+
+// const isRequired = value => value === '' ? false : true;
+
+// returns false if the length argument is not between the min and max argument:
+const isBetweenLen = ( (length, min, max) => {
+    (length < min || length > max) ? false : true;
+});
+
+// highlights the border of the input field and displays 
+// an error message if the input field is invalid:
+
+const showError = (input, message) => {
+    // get the form-field element's parent which is the div element
+    const formField = input.parentElement;
+    // add the error class
+    formField.classList.remove('success');
+    formField.classList.add('error');
+
+    // show the error message
+    const error = formField.querySelector('small');
+    error.textContent = message;
+};
+
+const showSuccess = (input) => {
+    // get the form-field element's parent which is the div element
+    const formField = input.parentElement;
+
+    // remove the error class
+    formField.classList.remove('error');
+    formField.classList.add('success');
+
+    // hide the error message
+    const error = formField.querySelector('small');
+    error.textContent = '';
+}
+
+
+form.addEventListener('submit', (e) => {
+    
+    // prevent the form from submitting
+    e.preventDefault();
+
+    // validate forms
+    let isUsernameValid = checkUsername(),
+        isEmailValid = checkEmail(),
+        isPasswordValid = checkPassword(),
+        isConfirmPasswordValid = checkConfirmPassword();
+
+    let isFormValid = isUsernameValid &&
+        isEmailValid &&
+        isPasswordValid &&
+        isConfirmPasswordValid;
+
+    // submit to the server if the form is valid
+    if (isFormValid) {
+        // not covered in this tutorial
+    }
+});
+
+const debounce = (fn, delay = 500) => {
+    let timeoutId;
+    return (...args) => {
+        // cancel the previous timer
+        if (timeoutId) {
+            clearTimeout(timeoutId);
+        }
+        // setup a new timer
+        timeoutId = setTimeout(() => {
+            fn.apply(null, args)
+        }, delay);
+    };
+};
+
+form.addEventListener('input', debounce(function (e) {
+    switch (e.target.id) {
+        case 'username':
+            checkUsername();
+            break;
+        case 'email':
+            checkEmail();
+            break;
+        case 'password':
+            checkPassword();
+            break;
+        case 'confirm-password':
+            checkConfirmPassword();
+            break;
+    }
+}));
