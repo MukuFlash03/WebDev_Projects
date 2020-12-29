@@ -1,3 +1,5 @@
+// https://webdesign.tutsplus.com/courses/3-javascript-projects-for-beginners/lessons/animate-on-scroll
+
 function animateItems(items) {
     items.each(function(i) {
       var $this = $(this);
