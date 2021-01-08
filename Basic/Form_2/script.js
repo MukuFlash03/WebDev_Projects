@@ -131,11 +131,14 @@ const isRequired = ( (value) => {
     return value === '' ? false : true;
 });
 
-// const isRequired = value => value === '' ? false : true;
+// If using arrow function with {}, need to return value else not needed
+// I hadn't returned the value earlier and hence the error in detecting valid username, email entries.
+//const isRequired = value => value === '' ? false : true;
+//const isBetween = (length, min, max) => length < min || length > max ? false : true;
 
 // returns false if the length argument is not between the min and max argument:
 const isBetweenLen = ( (length, min, max) => {
-    (length < min || length > max) ? false : true;
+    return (length < min || length > max) ? false : true;
 });
 
 // highlights the border of the input field and displays 
