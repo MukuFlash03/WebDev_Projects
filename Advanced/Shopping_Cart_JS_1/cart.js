@@ -13,12 +13,12 @@ var cart = {
     // B. JS Window.localstorage use to store cart details
 
     // save current cart
-    save: (() => {
+    save: function() {
         localStorage.setItem("cart", JSON.stringify(cart.currItems));
-    }),
+    },
 
     // load cart
-    load: (() => {
+    load: function() {
         cart.currItems = localStorage.getItem("cart");
         if (cart.currItems === null) {
             cart.currItems = {};
@@ -26,20 +26,20 @@ var cart = {
         else {
             cart.currItems = JSON.parse(cart.currItems)
         }
-    }),
+    },
 
     // empty cart
-    empty: (() => {
+    empty: function() {
         if (confirm("Empty Cart?")) {
             cart.currItems = {};
             localStorage.removeItem("cart");
             cart.list();
         }
-    }),
+    },
 
 
     // C. Initialze Shopping Cart
-    init: (() => {
+    init: function() {
 
         //get html elements
         cart.prodList = document.getElementById("cart-products");
@@ -85,7 +85,8 @@ var cart = {
             part.type = "button";
             part.value = "Add to Cart";
             part.className = "cart p-add";
-            part.onClick = cart.add;
+            // part.onclick = cart.add;
+            part.addEventListener("click", cart.add)
             part.dataset.id = id;
             item.appendChild(part);
         }
@@ -95,10 +96,10 @@ var cart = {
 
         // list current cart items
         cart.list();
-    }),
+    },
 
     // D. List current cart items
-    list: (() => {
+    list: function() {
         
         // reset
         cart.currCart.innerHTML = "";
@@ -137,7 +138,7 @@ var cart = {
 
                 // remove
                 part = document.createElement("input");
-                part.tpye = "button";
+                part.type = "button";
                 part.value = "X";
                 part.dataset.id = id;
                 part.className = "c-del cart";
@@ -146,7 +147,7 @@ var cart = {
 
                 // quantity
                 part = document.createElement("input");
-                part.tpye = "number";
+                part.type = "number";
                 part.value = cart.currItems[id];
                 part.dataset.id = id;
                 part.className = "c-qty";
@@ -174,10 +175,10 @@ var cart = {
             item.classList.add('c-checkout cart');
             cart.currCart.appendChild(item);
         }
-    }),
+    },
 
     // E. Add item to cart
-    add: (() => {
+    add: function() {
         if (cart.currItems[this.dataset.id] === undefined) {
             cart.currItems[this.dataset.id] = 1;
         }
@@ -186,10 +187,10 @@ var cart = {
         }
         cart.save();
         cart.list();
-    }),
+    },
 
     // F. Change quantity
-    change: (() => {
+    change: function() {
         if (this.value === 0) {
             delete cart.currItems[this.dataset.id];
         }
@@ -198,17 +199,17 @@ var cart = {
         }
         cart.save();
         cart.list();
-    }),
+    },
 
     // G. Remove item from cart
-    remove:  (() => {
+    remove:  function() {
         delete cart.currItems[this.dataset.id];
         cart.save();
         cart.list();
-    }),
+    },
 
     // H. Checkout
-    checkout: (() => {
+    checkout: function() {
         /*
          SEND DATA TO SERVER
          CHECKS
@@ -230,6 +231,6 @@ var cart = {
     xhr.onload = function(){ ... };
     xhr.send(data);
     */
-    })
+    }
 };
 window.addEventListener("DOMContentLoaded", cart.init);
