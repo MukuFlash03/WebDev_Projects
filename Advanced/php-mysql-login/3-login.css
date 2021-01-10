@@ -1,0 +1,33 @@
+/* (A) ENTIRE PAGE */
+html, body { font-family: arial, sans-serif; }
+
+/* (B) NOTIFICATION BAR */
+#notify {
+  background: #ffd9e3;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+/* (C) LOGIN FORM */
+#login {
+  max-width: 400px;
+  background: #f2f2f2;
+  margin: 0 auto;
+  padding: 20px;
+}
+#login strong {
+  color: #6f6f6f;
+}
+#login label, #login input {
+  box-sizing: border-box;
+  width: 100%;
+  margin: 10px 0;
+}
+#login input {
+  padding: 10px;
+}
+#login input[type=submit] {
+  background: #4f69db;
+  color: #fff;
+  border: 0;
+}
