@@ -164,7 +164,7 @@ var cart = {
             item.type = "button";
             item.value = "Empty";
             item.addEventListener('click', cart.empty);
-            item.classList.add('c-empty cart');
+            item.className = 'c-empty cart';
             cart.currCart.appendChild(item);
 
             // checkout buttons
@@ -172,7 +172,7 @@ var cart = {
             item.type = "button";
             item.value = "Checkout - " + '$' + total;
             item.addEventListener('click', cart.checkout);
-            item.classList.add('c-checkout cart');
+            item.className = 'c-checkout cart';
             cart.currCart.appendChild(item);
         }
     },
