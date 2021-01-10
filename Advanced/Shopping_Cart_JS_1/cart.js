@@ -219,7 +219,8 @@ var cart = {
          WHATEVER IS REQUIRED
         */
 
-        alert("Order successful!")
+        //  alert("Order successful!")
+        swal("Order successful!", "Your order has been placed successfully!", "success");
 
 
     /* AJAX to handle server and database backend
