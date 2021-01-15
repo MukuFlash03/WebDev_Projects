@@ -18,7 +18,7 @@
         $mail->Host = "smtp.gmail.com";
         $mail->SMTPAuth = true;
         $mail->Username = "cosmicflash03@gmail.com";
-        $mail->Password = 'fleqauifsdfczosf';
+        $mail->Password = 'zffxthrjzbhjdzao';
         $mail->Port = 465; //587
         $mail->SMTPSecure = "ssl"; //tls
 
