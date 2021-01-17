@@ -38,7 +38,7 @@
             $response = "You have registered successfully!";
         } else {
             $status = "failed";
-            $response = "Mail server error. Please try again later.\n" . $mail->ErrorInfo;
+            $response = "Mail server error.".$mail->ErrorInfo;
         }
 
         exit(json_encode(array("status" => $status, "response" => $response)));

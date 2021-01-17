@@ -189,14 +189,14 @@ form.addEventListener('submit', (e) => {
     // submit to the server if the form is valid
     if (isFormValid) {
         // Normal browser popup alert
-        alert('Registration successful!');
+       // alert('Registration successful!');
 
         // Sweet Alert popup message added on valid registration.
         swal("Welcome Aboard!", "You have registered successfully!", "success");
     }
     else {
         // Normal browser popup alert
-        alert('Invalid details! Please try again.');
+        // alert('Invalid details! Please try again.');
 
         // Sweet Alert popup message added on invalid registration.
         swal("Oops!", "Invalid registration details. Please try again.", "error");

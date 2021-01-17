@@ -5,11 +5,7 @@
         $name = $_POST['name'];
         $email = $_POST['email'];
         $subject = $_POST['subject'];
-        $msg = $_POST['msg'];
-
-        $adminEmail = "cosmicflash03@gmail.com";
-        $adminPass = 'zffxthrjzbhjdzao';
-        $adminName = 'Cosmic Flash';
+        $body = $_POST['body'];
 
         require_once "PHPMailer/PHPMailer.php";
         require_once "PHPMailer/SMTP.php";
@@ -21,24 +17,24 @@
         $mail->isSMTP();
         $mail->Host = "smtp.gmail.com";
         $mail->SMTPAuth = true;
-        $mail->Username = $adminEmail;
-        $mail->Password = $adminPass;
+        $mail->Username = "cosmicflash03@gmail.com";
+        $mail->Password = 'fleqauifsdfczosf';
         $mail->Port = 465; //587
         $mail->SMTPSecure = "ssl"; //tls
 
         //Email Settings
         $mail->isHTML(true);
-        $mail->setFrom($adminEmail, $adminName);
-        $mail->addAddress($email);
+        $mail->setFrom($email, $name);
+        $mail->addAddress("cosmicflash03@gmail.com");
         $mail->Subject = $subject;
-        $mail->Body = $msg;
+        $mail->Body = $body;
 
         if ($mail->send()) {
             $status = "success";
-            $response = "You have registered successfully!";
+            $response = "Email is sent!";
         } else {
             $status = "failed";
-            $response = "Mail server error. Please try again later.\n" . $mail->ErrorInfo;
+            $response = "Something is wrong: <br><br>" . $mail->ErrorInfo;
         }
 
         exit(json_encode(array("status" => $status, "response" => $response)));
