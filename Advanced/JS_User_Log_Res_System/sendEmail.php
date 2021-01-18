@@ -41,6 +41,9 @@
             $response = "Mail server error.".$mail->ErrorInfo;
         }
 
-        exit(json_encode(array("status" => $status, "response" => $response)));
+         echo "Test";
+        // exit("Test");
+        // echo json_encode(array("status" => $status, "response" => $response));
+       // exit(json_encode(array("status" => $status, "response" => $response)));
     }
 ?>

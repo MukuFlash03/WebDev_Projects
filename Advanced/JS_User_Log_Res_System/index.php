@@ -33,7 +33,8 @@
         </div>
 
         <div class="form-field">
-            <input type="button" onclick="sendEmail()" value="Send An Email" class="btn">
+            <input type="button" id="sendbtn" name="sendbtn" onclick="sendEmail()" value="Send An Email" class="btn">
+            <small></small>
         </div>
     </div>
 
@@ -42,146 +43,82 @@
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script type="text/javascript">
         function sendEmail() {
-            var name = document.querySelector("#name");
-            var email = document.querySelector("#email");
-            var subject = document.querySelector("#subject");
-            var msg = document.querySelector("#msg");
+            let name = document.querySelector("#name");
+            let email = document.querySelector("#email");
+            let subject = document.querySelector("#subject");
+            let msg = document.querySelector("#msg");
+            let butn = document.querySelector("#sendbtn");
 
             if (isNotEmpty(name) && isNotEmpty(email) && isNotEmpty(subject) && isNotEmpty(msg)) {
                 const xhr = new XMLHttpRequest();
                 xhr.open('POST', 'sendEmail.php', true);
-                xhr.responseType = 'json';
+                // xhr.responseType = 'json';
+                xhr.responseType = 'text';
                 const data = {
-                       name: name,
-                       email: email,
-                       subject: subject,
-                       msg: msg
+                       name: name.value.trim(),
+                       email: email.value.trim(),
+                       subject: subject.value.trim(),
+                       msg: msg.value.trim()
                 };
-                
-                xhr.onload = function() {
-                    if (this.status == 200) {
-                       // alert(this.status + ' ' + "Success");
-                        swal("Welcome Aboard!", "You have registered successfully!" + this.status, "success");
-                    }    
-                    else {
-                        // alert(xhr.status + ' ' + "Mail Error" + '\n');
-                        swal("Oops!", "Mail server error." + xhr.status, "error");
-                    }   
-                }
+
 
                 /*
-                let response = '';
-                xhr.onreadystatechange = function() {
-                    response = this.responseText;
-                    alert(response);
-                }
+                // Returns empty.
+                xhr.onload = function () {
+                    const result = xhr.response;
+                    if (xhr.readyState === xhr.DONE) {
+                        if (xhr.status === 200) {
+                            console.log(xhr.response);
+                            console.log(xhr.responseText);
+                            console.log(result.status);
+                            console.log(result.response);
+                        }
+                    }
+                };
                 */
+
+                console.log(data);
+                
+            
+                xhr.onload = function(result) {
+                    if (this.status == 200) {
+                        let ff = butn.parentElement;
+                        let err = ff.querySelector('small');
+                        err.textContent = "Response: " + result['response'] + "\t" + "Status: " + result['status'];
+
+                        console.log(result);
+
+                        if (result.status === "status") {
+                            console.log(result.status);
+                        // alert(this.status + ' ' + "Success");
+                        swal("Welcome Aboard!", "You have registered successfully! " + this.status, "success");
+                        }
+                        else if (result.status === 200 || result.statusText === "OK") {
+                            console.log(result.status);
+                            swal("Oops!", "Duh." + result.status, "error");
+                        }
+                        else {
+                            console.log("DUH" + result.status + "Duh");
+                            console.log(JSON.stringify(data));
+                        // alert(xhr.status + ' ' + "Mail Error" + '\n');
+                        swal("Oops!", "Mail server error. " + result.status, "error");
+                        }   
+                        console.log(xhr.responseURL);
+                    }
+                }
+                
+
+                // xhr.setRequestHeader('Content-Type', 'application/json');
+                // xhr.setRequestHeader('Accept', '*/*'); // accept all
 
                 xhr.send(JSON.stringify(data));
             }
         }
 
-        function isNotEmpty(caller) {
-            const formField = caller.parentElement;
-            if (caller == "") {
-                formField.classList.remove('success');
-                formField.classList.add('error');
-
-                const error = formField.querySelector('small');
-                error.textContent = 'Cannot be blank';
-
-                return false;
-            }
-            else {
-                formField.classList.remove('error');
-                formField.classList.add('success');
-
-                const error = formField.querySelector('small');
-                error.textContent = '';
-            }
-            return true;
-        }
-
-            /*
-            if (isNotEmpty(name) && isNotEmpty(email) && isNotEmpty(subject) && isNotEmpty(msg)) {
-                $.ajax({
-                   url: 'sendEmail.php',
-                   method: 'POST',
-                   dataType: 'json',
-                   data: {
-                       name: name.val(),
-                       email: email.val(),
-                       subject: subject.val(),
-                       msg: msg.val()
-                   }, 
-                   success: function (response) {
-                        if (response.status == "success") {
-                            swal("Welcome Aboard!", "You have registered successfully!", "success");
-                        }
-                        else {
-                            swal("Oops!", "Mail server error. Please try again later.", "error");
-                            console.log(response);
-                        }
-                   }
-                });
-            }
-        }
-
-        function isNotEmpty(caller) {
-            if (caller.val() == "") {
-                caller.css('border', 'solid 2px #dc3545');
-                return false;
-            } else
-                caller.css('border', 'solid 2px #f0f0f0');
-
-            return true;
-        }
-        */
-
-    /*
-        function sendEmail() {
-            var iname = document.querySelector('#name');
-            var iemail = document.querySelector('#email');
-            var isubject = document.querySelector('#subject');
-            var imsg = document.querySelector('#msg');
-
-            if (isNotEmpty(iname) && isNotEmpty(iemail) && isNotEmpty(isubject) && isNotEmpty(imsg)) {
-                $.ajax({
-                   url: 'sendEmail.php',
-                   method: 'POST',
-                   dataType: 'json',
-                   data: {
-                       name: iname,
-                       email: iemail,
-                       subject: isubject,
-                       msg: imsg
-                   }, success: function (response) {
-                        if (response.status == "success")
-                            alert('Email Has Been Sent!');
-                        else {
-                            alert('Please Try Again!');
-                            console.log(response);
-                        }
-                   }
-                });
-            }
-        }
-
-        function isNotEmpty(caller) {
-            const formField = caller.parentElement;
-            if (caller == "") {
-                formField.classList.remove('success');
-                formField.classList.add('error');
-                return false;
-            } 
-
-            return true;
-        }
-
-        
         function isNotEmpty(input) {
-            const formField = (input.value.trim()).parentElement;
-            if (input.val() == "") {
+            let caller = input.value.trim();
+            const formField = input.parentElement;
+            if (caller === "") {
                 formField.classList.remove('success');
                 formField.classList.add('error');
 
@@ -189,7 +126,7 @@
                 error.textContent = 'Cannot be blank';
 
                 return false;
-            } 
+            }
             else {
                 formField.classList.remove('error');
                 formField.classList.add('success');
@@ -199,7 +136,7 @@
             }
             return true;
         }
-        */
+
     </script>
 
 </body>
