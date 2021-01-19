@@ -53,7 +53,7 @@
                 const xhr = new XMLHttpRequest();
                 xhr.open('POST', 'sendEmail.php', true);
                 // xhr.open('GET', 'sendEmail.php', true);
-                // xhr.responseType = 'json';
+                // xhr.responseType = 'json'; // not to be used since JSON is ultimately string text data
                 xhr.responseType = 'text';
                 const data = {
                        name: name.value.trim(),
@@ -62,74 +62,32 @@
                        msg: msg.value.trim()
                 };
 
+                console.log("Client:\n")
                 console.log(data);
             
 
                 xhr.onreadystatechange = function() { 
                     if (this.readyState == 4 && this.status == 200) { 
-                       let myObj = JSON.parse(this.responseText); 
+                        let myObj = JSON.parse(this.responseText); 
+
+                        if (myObj)
+                            swal("Welcome Aboard!", "You have registered successfully! ", "success");
+                        else
+                            swal("Oops!", "Mail server error. ", "error");
 
 
                         let ff = butn.parentElement;
                         let err = ff.querySelector('small');
                         err.textContent = "Response: " + myObj;
 
+                        console.log("Server:\n");
                         console.log(myObj);
                     }
                 };
                 
                 xhr.send(JSON.stringify(data));
-                // xhr.send();
+                // xhr.send(); // for GET
 
-                /*
-                // Returns empty.
-                xhr.onload = function () {
-                    const result = xhr.response;
-                    if (xhr.readyState === xhr.DONE) {
-                        if (xhr.status === 200) {
-                            console.log(xhr.response);
-                            console.log(xhr.responseText);
-                            console.log(result.status);
-                            console.log(result.response);
-                        }
-                    }
-                };
-                */
-
-                
-                /*
-                xhr.onload = function(result) {
-                    if (this.status == 200) {
-                        let ff = butn.parentElement;
-                        let err = ff.querySelector('small');
-                        err.textContent = "Response: " + result['response'] + "\t" + "Status: " + result['status'];
-
-                        console.log(result);
-
-                        if (result.status === "status") {
-                            console.log(result.status);
-                        // alert(this.status + ' ' + "Success");
-                        swal("Welcome Aboard!", "You have registered successfully! " + this.status, "success");
-                        }
-                        else if (result.status === 200 || result.statusText === "OK") {
-                            console.log(result.status);
-                            swal("Oops!", "Duh." + result.response, "error");
-                        }
-                        else {
-                            console.log("DUH" + result.response + "Duh");
-                            console.log(JSON.stringify(data));
-                        // alert(xhr.status + ' ' + "Mail Error" + '\n');
-                        swal("Oops!", "Mail server error. " + result.response, "error");
-                        }   
-                        console.log(xhr.responseURL);
-                    }
-                }
-                */
-
-                // xhr.setRequestHeader('Content-Type', 'application/json');
-                // xhr.setRequestHeader('Accept', '*/*'); // accept all
-
-                // xhr.send(JSON.stringify(data));
             }
         }
 
