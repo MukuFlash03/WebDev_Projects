@@ -1,14 +1,14 @@
 <?php
     use PHPMailer\PHPMailer\PHPMailer;
  
-    // /*
-// Read the input stream and Decode the JSON object
+    /* For POST
+    // Read the input stream and Decode the JSON object
     $dataIn = json_decode(file_get_contents("php://input"), true);
     $dataOut = json_encode($dataIn);
     echo $dataOut;
-    // */
+     */
     
-    /*
+    /* For GET
     $myObj = new stdClass(); 
     $myObj->name = "Geeks"; 
     $myObj->college="NIT"; 
@@ -18,12 +18,14 @@
     echo $myJSON; 
     */
 
-    /*
-    if (isset($_POST['data'['name']]) && isset($_POST['data'['email']])) {
-        $name = $_POST['data'['name']];
-        $email = $_POST['data'['email']];
-        $subject = $_POST['data'['subject']];
-        $msg = $_POST['data'['msg']];
+    
+    $dataIn = json_decode(file_get_contents("php://input"), true);
+
+    if (isset($dataIn['name']) && isset($dataIn['email'])) {
+        $name = $dataIn['name'];
+        $email = $dataIn['email'];
+        $subject = $dataIn['subject'];
+        $msg = $dataIn['msg'];
 
         $adminEmail = "cosmicflash03@gmail.com";
         $adminPass = 'zffxthrjzbhjdzao';
@@ -54,16 +56,24 @@
         if ($mail->send()) {
             $status = "success";
             $response = "You have registered successfully!";
-        } else {
+        } 
+        else {
             $status = "failed";
-            $response = "Mail server error.".$mail->ErrorInfo;
+            $response = "Mail server error."; //.$mail->ErrorInfo;
         }
+        
+        
+        $myObj = new stdClass();
+        $myObj->name = $name;
+        $myObj->email = $email;
+        $myObj->subject = $subject;
+        $myObj->msg = $msg;
+        $myObj->status = $status;
+        $myObj->response = $response;
+        $dataOut = json_encode($myObj);
+        exit($dataOut);
 
-         echo "Test";
-        // exit("Test");
-        // echo json_encode(array("status" => $status, "response" => $response));
-       // exit(json_encode(array("status" => $status, "response" => $response)));
-    }
-    */
-  //  echo "Test";
+    } // main if 
+    // $dataOut = json_encode($dataIn);
+    // echo $dataOut;
 ?>

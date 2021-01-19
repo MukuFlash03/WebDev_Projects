@@ -69,11 +69,12 @@
                 xhr.onreadystatechange = function() { 
                     if (this.readyState == 4 && this.status == 200) { 
                         let myObj = JSON.parse(this.responseText); 
+                        // let myObj = this.responseText;
 
-                        if (myObj)
+                        // if (myObj["status"] == "success")
                             swal("Welcome Aboard!", "You have registered successfully! ", "success");
-                        else
-                            swal("Oops!", "Mail server error. ", "error");
+                        // else
+                            // swal("Oops!", "Mail server error. ", "error");
 
 
                         let ff = butn.parentElement;
