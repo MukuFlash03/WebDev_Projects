@@ -1,11 +1,29 @@
 <?php
     use PHPMailer\PHPMailer\PHPMailer;
+ 
+    // /*
+// Read the input stream and Decode the JSON object
+    $dataIn = json_decode(file_get_contents("php://input"), true);
+    $dataOut = json_encode($dataIn);
+    echo $dataOut;
+    // */
+    
+    /*
+    $myObj = new stdClass(); 
+    $myObj->name = "Geeks"; 
+    $myObj->college="NIT"; 
+    $myObj->gender = "Male"; 
+    $myObj->age = 30; 
+    $myJSON = json_encode($myObj); 
+    echo $myJSON; 
+    */
 
-    if (isset($_POST['name']) && isset($_POST['email'])) {
-        $name = $_POST['name'];
-        $email = $_POST['email'];
-        $subject = $_POST['subject'];
-        $msg = $_POST['msg'];
+    /*
+    if (isset($_POST['data'['name']]) && isset($_POST['data'['email']])) {
+        $name = $_POST['data'['name']];
+        $email = $_POST['data'['email']];
+        $subject = $_POST['data'['subject']];
+        $msg = $_POST['data'['msg']];
 
         $adminEmail = "cosmicflash03@gmail.com";
         $adminPass = 'zffxthrjzbhjdzao';
@@ -46,4 +64,6 @@
         // echo json_encode(array("status" => $status, "response" => $response));
        // exit(json_encode(array("status" => $status, "response" => $response)));
     }
+    */
+  //  echo "Test";
 ?>

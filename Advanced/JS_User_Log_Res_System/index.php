@@ -52,6 +52,7 @@
             if (isNotEmpty(name) && isNotEmpty(email) && isNotEmpty(subject) && isNotEmpty(msg)) {
                 const xhr = new XMLHttpRequest();
                 xhr.open('POST', 'sendEmail.php', true);
+                // xhr.open('GET', 'sendEmail.php', true);
                 // xhr.responseType = 'json';
                 xhr.responseType = 'text';
                 const data = {
@@ -61,6 +62,24 @@
                        msg: msg.value.trim()
                 };
 
+                console.log(data);
+            
+
+                xhr.onreadystatechange = function() { 
+                    if (this.readyState == 4 && this.status == 200) { 
+                       let myObj = JSON.parse(this.responseText); 
+
+
+                        let ff = butn.parentElement;
+                        let err = ff.querySelector('small');
+                        err.textContent = "Response: " + myObj;
+
+                        console.log(myObj);
+                    }
+                };
+                
+                xhr.send(JSON.stringify(data));
+                // xhr.send();
 
                 /*
                 // Returns empty.
@@ -77,9 +96,8 @@
                 };
                 */
 
-                console.log(data);
                 
-            
+                /*
                 xhr.onload = function(result) {
                     if (this.status == 200) {
                         let ff = butn.parentElement;
@@ -95,23 +113,23 @@
                         }
                         else if (result.status === 200 || result.statusText === "OK") {
                             console.log(result.status);
-                            swal("Oops!", "Duh." + result.status, "error");
+                            swal("Oops!", "Duh." + result.response, "error");
                         }
                         else {
-                            console.log("DUH" + result.status + "Duh");
+                            console.log("DUH" + result.response + "Duh");
                             console.log(JSON.stringify(data));
                         // alert(xhr.status + ' ' + "Mail Error" + '\n');
-                        swal("Oops!", "Mail server error. " + result.status, "error");
+                        swal("Oops!", "Mail server error. " + result.response, "error");
                         }   
                         console.log(xhr.responseURL);
                     }
                 }
-                
+                */
 
                 // xhr.setRequestHeader('Content-Type', 'application/json');
                 // xhr.setRequestHeader('Accept', '*/*'); // accept all
 
-                xhr.send(JSON.stringify(data));
+                // xhr.send(JSON.stringify(data));
             }
         }
 
