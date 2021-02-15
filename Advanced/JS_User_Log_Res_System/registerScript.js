@@ -221,6 +221,7 @@ form.addEventListener('submit', (e) => {
                msg: msgEl.value.trim()
         };
 
+        
         console.log("Client:\n")
         console.log(data);
     

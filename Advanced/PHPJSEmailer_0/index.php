@@ -22,17 +22,6 @@
             </div>
 
             <div class="form-field">
-                <label for="Password">Password:</label>
-                <input type="password" class="password" name="password" id="password" autocomplete="off" placeholder="Enter a strong password">
-                <small></small>
-            </div>
-
-            <div class="form-field">
-                <label for="Confirm-password">Confirm Password:</label>
-                <input type="password" class="confirm-password" name="confirm-password" id="confirm-password" autocomplete="off" placeholder="Reenter your password">
-                <small></small>
-
-            <div class="form-field">
                 <label for="Subject">Subject:</label>
                 <input type="text" class="subject" name="subject" id="subject" autocomplete="off" placeholder="Enter email subject">
                 <small></small>
@@ -45,7 +34,24 @@
             </div>
 
             <div class="form-field">
+                <label for="Password">Password:</label>
+                <input type="password" class="password" name="password" id="password" autocomplete="off" placeholder="Enter a strong password">
+                <small></small>
+            </div>
+
+            <div class="form-field">
+                <label for="Confirm-password">Confirm Password:</label>
+                <input type="password" class="confirm-password" name="confirm-password" id="confirm-password" autocomplete="off" placeholder="Reenter your password">
+                <small></small>
+            </div>
+
+            <div class="form-field">
                 <input type="submit" id="sendbtn" name="sendbtn" value="Send An Email" class="btn">
+                <small></small>
+            </div>
+
+            <div class="form-field">
+                <input type="reset" id="resbtn" name="resbtn" value="Reset" class="btn">
                 <small></small>
             </div>
         </form>

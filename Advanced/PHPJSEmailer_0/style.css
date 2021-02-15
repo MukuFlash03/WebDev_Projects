@@ -125,6 +125,7 @@ body {
     border-left-style: none;
     color: #fff;
     text-transform: uppercase;
+    display: inline;
 }
 
 .btn:hover {

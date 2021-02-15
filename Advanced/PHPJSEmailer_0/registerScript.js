@@ -1,11 +1,27 @@
-let nameEl = document.querySelector("#name");
-let emailEl = document.querySelector("#email");
-let passwordEl = document.querySelector('#password');
-let confirmPasswordEl = document.querySelector('#confirm-password');
-let subjectEl = document.querySelector("#subject");
-let msgEl = document.querySelector("#msg");
-let butn = document.querySelector("#sendbtn");
-let form = document.querySelector('#signup');
+const nameEl = document.querySelector("#name");
+const emailEl = document.querySelector("#email");
+const passwordEl = document.querySelector('#password');
+const confirmPasswordEl = document.querySelector('#confirm-password');
+const subjectEl = document.querySelector("#subject");
+const msgEl = document.querySelector("#msg");
+// const butn = document.querySelector("#sendbtn");
+const form = document.querySelector('#signup');
+//const resBt = document.querySelector("#resbtn");
+
+const inputEl = [nameEl, emailEl, passwordEl, confirmPasswordEl, 
+                  subjectEl, msgEl];
+
+
+form.addEventListener("reset", () => {
+    console.log('In resetForm()');
+    for (elem of inputEl) {
+        const formField = elem.parentElement;
+        formField.classList.remove('success');
+        formField.classList.remove('error');
+        const error = formField.querySelector('small');
+        error.textContent = '';
+    }
+});
 
 const checkName = ( () => {
     let valid = false;
@@ -219,10 +235,11 @@ form.addEventListener('submit', (e) => {
                 // else
                     // swal("Oops!", "Mail server error. ", "error");
 
-
+                /*
                 let ff = butn.parentElement;
                 let err = ff.querySelector('small');
                 err.textContent = "Response: " + myObj;
+                */
 
                 console.log("Server:\n");
                 console.log(myObj);
