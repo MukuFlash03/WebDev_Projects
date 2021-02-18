@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hangman! A Word Game</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="wrapper">
+        <h1>Hangman</h1>
+        <h2>Word Guessing Game</h2>
+        <p>Use the alphabet below to guess the word or click hint to get a clue. You have 10 lives to correctly guess the word clue. You lose one live for every incorrect letter guess.</p>
+    </div>
+    
+    <div class="wrapper">
+        <div id="buttons"></div>
+        <p id="category"></p>
+        <div id="blanks"></div>
+        <p id="lives"></p>
+        <p id="clue">Clue</p>
+
+        <canvas id="stickman">This text will not show if the browser does not support HTML5 canvas tag</canvas>
+
+        <div class="container">
+            <button id="hint">Hint</button>
+            <button id="reset">Play Again</button>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
