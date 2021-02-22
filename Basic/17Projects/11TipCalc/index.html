@@ -12,6 +12,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="style.css" rel="stylesheet">
+    <script src="scripts.js"></script>
 </head>
 
 <body>
@@ -60,18 +61,14 @@
 
                     <div class="form-row">
                         <label class="mb-sm-2 mt-3" for="tipForm">Tip Percent</label>
-                        <input type="range" class="form-control" id="tipInput" value="5">
-                        <input type="text" class="form-control" id="tipForm" placeholder="5%">
+                        <input type="range" class="form-control" id="tipInput" value="0">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">%</span>
+                            </div>
+                            <input type="number" class="form-control" id="tipForm" placeholder="5"  min="0" max="100" value="5" step="5">
+                        </div>
 
-                        <!--
-                        <select class="form-control" id="tipForm">
-                            <option value=".05">5% </option>
-                            <option value=".1">10% </option>
-                            <option selected value=".15">15% </option>
-                            <option value=".2">20% </option>
-                            <option value=".25">25% </option>
-                        </select>
-                        -->
                     </div>
 
 
@@ -83,6 +80,5 @@
 
         </div>
     </div>
-    <script src="scripts.js"></script>
 </body>
 </html>

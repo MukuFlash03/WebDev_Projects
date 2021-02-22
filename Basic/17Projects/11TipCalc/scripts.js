@@ -34,12 +34,13 @@ window.onload = () => {
 
 
     let slider = document.getElementById("tipInput");
-    slider.addEventListener("mousemove", () => {
-        tipAmount.innerHTML = slider.value + "%";
+    slider.addEventListener("click", () => {
+        tipAmount.value = slider.value;
+        console.log(`Sliding at ${tipAmount.value}%`);
     });
 
     tipAmount.addEventListener("input", () => {
-            tipAmount.innerHTML = tipAmount.value + "%";
+            slider.value = tipAmount.value;
     });
 
 }
