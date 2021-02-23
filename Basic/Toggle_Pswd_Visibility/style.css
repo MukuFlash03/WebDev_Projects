@@ -50,3 +50,7 @@ h1 {
 .fa, .far, .fas {
     display: inline;
 }
+
+.container i.hide-btn::before {
+    content: "\f070";
+}
