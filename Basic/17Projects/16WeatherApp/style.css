@@ -17,7 +17,7 @@ body {
 
 .location, 
 .temperature {
-    height: 30vh;
+    height: 20vh;
     width: 50%;
     display: flex;
     justify-content: space-around;
@@ -32,15 +32,19 @@ body {
 .degree-section {
     display: flex;
     align-items: center;
+    cursor: pointer;
 
 }
 
 .degree-section span {
     margin: 10px;
     font-size: 30px;
-    cursor: pointer;
 }
 
 .degree-section h2 {
     font-size: 40px
+}
+
+.temperature-description {
+    text-transform: capitalize;
 }
