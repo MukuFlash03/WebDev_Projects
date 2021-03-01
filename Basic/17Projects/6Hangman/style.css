@@ -27,7 +27,7 @@ body {
   clear: both;
 }
 
-canvas {
+cavas {
   color: var(--white);
   border: var(--white) dashed 2px;
   padding: 15px;
@@ -99,21 +99,21 @@ h2, p {
 .active {
   opacity: 0.4;
   filter: alpha(opacity=40);
-  -transition: all 1s ease-in;
-  -transition: all 0.3s ease-in-out;
-  -transition: all 0.3s ease-in-out;
+  -moz-transition: all 1s ease-in;
+  -moz-transition: all 0.3s ease-in-out;
+  -webkit-transition: all 0.3s ease-in-out;
   cursor: default;
 }
 
 .active:hover {
-  -transition: all 1s ease-in;
-  -transition: all 0.3s ease-in-out;
-  -transition: all 0.3s ease-in-out;
+  -moz-transition: all 1s ease-in;
+  -moz-transition: all 0.3s ease-in-out;
+  -webkit-transition: all 0.3s ease-in-out;
   opacity: 0.4;
   filter: alpha(opacity=40);
-  -transition: all 1s ease-in;
-  -transition: all 0.3s ease-in-out;
-  -transition: all 0.3s ease-in-out;
+  -moz-transition: all 1s ease-in;
+  -moz-transition: all 0.3s ease-in-out;
+  -webkit-transition: all 0.3s ease-in-out;
 }
 
 #lives {

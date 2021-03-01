@@ -1,50 +1,193 @@
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+:root {
+  --clr-primary: #ee6352;
+  --clr-body: #333;
+  --clr-bg: #ddd;
+}
+
+header {
+  padding: 15px 15px 15px 15px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 body {
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
-    background: linear-gradient(rgb(47,150,163), rgb(48,62,143));
-    font-family: sans-serif;
-    color: white;
+  height: 100vh;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background: -webkit-gradient(linear, left top, left bottom, from(#2f96a3), to(#303e8f));
+  background: linear-gradient(#2f96a3, #303e8f);
+  font-family: 'montserrat', sans-serif;
+  color: white;
 }
 
-.location, 
-.temperature {
-    height: 20vh;
-    width: 50%;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-
+.app-wrap {
+  background-image: url("bg.jpg");
+  background-position: top center;
+  background-size: cover;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  min-height: 75vh;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  outline: white;
+  outline-width: 10em;
+  padding-top: 7.5em;
+  border-radius: 20px 20px 20px 20px;
 }
 
-.temperature {
-    flex-direction: column;
+.input-city {
+  --size: 60px;
+  border: 2px solid var(--clr-primary);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  border-radius: 100px;
+  overflow: hidden;
+  font-size: 1.25em;
+  position: relative;
+  width: var(--size);
+  height: var(--size);
+  -webkit-transition: width 450ms cubic-bezier(0.18, 0.89, 0.32, 1.28);
+  transition: width 450ms cubic-bezier(0.18, 0.89, 0.32, 1.28);
+  padding: 5px 5px;
+  background-color: white;
+}
+
+.search-city {
+  border: 0;
+  padding: .25em 1em;
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  outline: 0;
+  z-index: 2;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: white;
+  opacity: 0;
+  cursor: pointer;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-size: x-large;
+}
+
+.search-submit {
+  font-size: 1.5rem;
+  margin-left: auto;
+  background: 0;
+  border: 0;
+  cursor: pointer;
+  border-radius: 50%;
+  -webkit-transition: background 200ms ease-out;
+  transition: background 200ms ease-out;
+  width: calc(var(--size) - 10px);
+  height: calc(var(--size) - 10px);
+  color: var(--clr-primary);
+}
+
+.input-city:focus-within {
+  width: 100%;
+}
+
+.input-city:focus-within .search-city {
+  opacity: 1;
+  z-index: initial;
+  cursor: initial;
+  width: calc(100% - var(--size));
+  text-transform: capitalize;
+}
+
+.input-city:focus-within .search-submit {
+  background: var(--clr-primary);
+  color: white;
+  -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+}
+
+.input-city:focus-within .search-submit:hover, .input-city:focus-within .search-submit:focus {
+  outline: 0;
+  -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.65);
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.65);
+}
+
+.location,
+.weather {
+  padding-top: 5em;
+  padding-bottom: 2em;
+  height: 10vh;
+  width: 50%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.weather {
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
 }
 
 .degree-section {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  cursor: pointer;
 }
 
 .degree-section span {
-    margin: 10px;
-    font-size: 30px;
+  margin: 10px;
+  font-size: 30px;
 }
 
 .degree-section h2 {
-    font-size: 40px
+  font-size: 40px;
 }
 
 .temperature-description {
-    text-transform: capitalize;
+  text-transform: capitalize;
+  font-size: 30px;
 }
+/*# sourceMappingURL=style.css.map */
