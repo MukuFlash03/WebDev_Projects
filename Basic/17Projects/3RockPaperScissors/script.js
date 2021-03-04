@@ -1,18 +1,30 @@
 // https://www.youtube.com/watch?v=qWPtKtYEsN4
+// https://medium.com/@javitocor/how-to-build-a-rock-paper-scissors-game-with-javascript-4b176ecc777d
 
 const game = () => {
   let [pScore, cScore] = [0,0];
   let currTurn = 1;
+  const currentTurn = document.querySelector(".currTurn");
+  const maxTurns = document.querySelector(".maxWins");
+  let maxTurn = maxTurns.value;
+  const winner = document.querySelector(".winner");
+  const introScreen = document.querySelector(".intro");
+  const matchScreen = document.querySelector(".match");
+  const playerScore = document.querySelector('.player-score p');
+  const computerScore = document.querySelector('.computer-score p');
 
   // Start Game function
   const startGame = () => {
     const playBtn = document.querySelector(".intro button");
-    const introScreen = document.querySelector(".intro");
-    const matchScreen = document.querySelector(".match");
 
     playBtn.addEventListener("click", () => {
+      introScreen.classList.remove("fadeIn");
+      matchScreen.classList.remove("fadeOut");
       introScreen.classList.add("fadeOut");
       matchScreen.classList.add("fadeIn");
+      winner.textContent = "Pick your move";
+      maxTurn = maxTurns.value;
+      console.log(maxTurn);
     });
   };
 
@@ -21,15 +33,7 @@ const game = () => {
     const options = document.querySelectorAll('.options button');
     const playerHand = document.querySelector('.player-hand');
     const computerHand = document.querySelector('.computer-hand');
-    const currentTurn = document.querySelector(".currTurn");
-    const maxTurns = document.querySelector(".maxWins");
 
-    let maxTurn = maxTurns.value;
-    maxTurns.addEventListener("change", () => {
-      maxTurn = maxTurns.value;
-      console.log(maxTurn);
-    })
-    
 
     const hands = document.querySelectorAll('.hands img');
     hands.forEach(hand => {
@@ -51,30 +55,22 @@ const game = () => {
           // Update Hand Images
           playerHand.src = `./assets/${this.className}.png`;
           computerHand.src = `./assets/${computerMove}.png`;
+
+          setTimeout(() => {
+            whoWon();
+            reset();
+          }, 2000);
         }, 2000);
 
         // Animation
         playerHand.style.animation = "shakePlayer 2s ease";
         computerHand.style.animation = "shakeComputer 2s ease";
+
       });
     });
-
-    if (currTurn > maxTurn) {
-      console.log(maxTurn);
-      if (pScore > cScore) {
-        winner.textContent = `Player Wins: ${pScore} + '-' + ${cScore}`;
-      }
-      else if (pScore < cScore) {
-        winner.textContent = `Computer Wins: ${cScore} + '-' + ${pScore}`;
-      }
-      else {
-        winner.textContent = `It's a Tie: ${cScore} + '-' + ${pScore}`;
-      }
-    }
   };
 
   const compareHands = (playerMove, computerMove) => {
-    const winner = document.querySelector(".winner");
     if (playerMove === computerMove) {
       winner.textContent = "It is a Tie";
       return;
@@ -130,11 +126,55 @@ const game = () => {
   };
 
   const updateScore = () => {
-    const playerScore = document.querySelector('.player-score p');
-    const computerScore = document.querySelector('.computer-score p');
     playerScore.textContent = pScore;
     computerScore.textContent = cScore;
+    console.log(currTurn);
   }
+
+  const endGame = () => {
+    if (currTurn > maxTurn) {
+      console.log(`${currTurn} > ${maxTurn}`);
+      return true
+    }
+    return false;
+  }
+  
+  const whoWon = () => {
+    if (endGame()) {
+      if (pScore > cScore) {
+        winner.textContent = `Player Wins: ${pScore} - ${cScore}`;
+        currentTurn.textContent = "Woohoo!!!";
+      }
+      else if (pScore < cScore) {
+        winner.textContent = `Computer Wins: ${cScore} - ${pScore}`;
+        currentTurn.textContent = "Oh ho...Better Luck Next Time!";
+      }
+      else {
+        winner.textContent = `It's a Tie: ${cScore} - ${pScore}`;
+        currentTurn.textContent = "Points Apiece!";
+      }
+    }
+  }
+
+  const reset = () => {
+    if (endGame()) {
+      setTimeout(() => {
+        pScore = 0;
+        cScore = 0;
+        currTurn = 1;
+        playerScore.textContent = 0;
+        computerScore.textContent = 0;
+        winner.innerHTML = '';
+        currentTurn.innerHTML = '';
+
+        matchScreen.classList.remove("fadeIn");
+        matchScreen.classList.add("fadeOut");
+        introScreen.classList.remove("fadeOut");
+        introScreen.classList.add("fadeIn");
+      }, 2000);    
+    }
+  }
+  
 
   // Call all inner functions
   startGame();
