@@ -1,21 +1,33 @@
 // https://www.youtube.com/watch?v=cF3pIMJUZxM
+// https://github.com/CleverProgrammers/react-covid-tracker
+// https://github.com/ShinAKS/covid-19-tracker
 
 
 import React, { useEffect, useState } from 'react';
 import './App.css';
+import './Table.css';
 import { 
   MenuItem, FormControl, Select, Card, CardContent
 } from "@material-ui/core";
 import InfoBox from './InfoBox';
 import Map from './Map';
+import Table from './Table';
+import { sortData, printStat } from './util';
+import LineGraph from './LineGraph';
+import "leaflet/dist/leaflet.css";
 
 
 function App() {
   const [countries, setCountries] = useState([]);
   const [country, setCountry] = useState('worldwide');
   const [countryInfo, setCountryInfo] = useState({});
+  const [tableData, setTableData] = useState([]);
+  const [mapCenter, setMapCenter] = useState([34.80746, -40.4796]);
+  const [mapZoom, setMapZoom] = useState(3);
+  const [mapCountries, setMapCountries] = useState([]);
+  const [casesType, setCasesType] = useState('cases');
 
-
+// Fetch worldwide stats for setting stats on initial pageload
   useEffect(() => {
     fetch("https://disease.sh/v3/covid-19/all")
     .then((response) => response.json())
@@ -25,6 +37,7 @@ function App() {
   }, []);
 
 
+  // Fetch country name and code for setting dropdown menu options
   useEffect(() => {
     const getCountriesData = async () => {
       await fetch ("https://disease.sh/v3/covid-19/countries")
@@ -37,6 +50,9 @@ function App() {
           }
         ))
 
+        const sortedData = sortData(data);
+        setTableData(sortedData);
+        setMapCountries(data);
         setCountries(countries);
       })
     }
@@ -44,6 +60,8 @@ function App() {
     getCountriesData();
   }, []);
 
+
+  // Fetch country stats on clicking option in dropdown
   const onCountryChange = (event) => {
     const countryCode = event.target.value;
 
@@ -55,12 +73,16 @@ function App() {
     
       console.log(url);
     
+    // Fetch country stats on clicking option in dropdown
     const getStats = async () => {
       await fetch(url)
       .then((response) => response.json())
       .then((data) => {
         setCountry(countryCode);
         setCountryInfo(data);
+
+        setMapCenter([data.countryInfo.lat, data.countryInfo.long]);
+        setMapZoom(4);
       })
     };
 
@@ -75,7 +97,7 @@ function App() {
       <div className="app_left">
         <div className="app_header">
           <h1>Covid 19 Global Tracker</h1>
-          <FormControl className="dropdown">
+          <FormControl className="app_dropdown">
             <Select variant="outlined" value={country} onChange={onCountryChange}>
               <MenuItem value="worldwide">Worldwide</MenuItem>
                 {
@@ -88,42 +110,79 @@ function App() {
         </div>
 
         <div className="app_stats">
-          <InfoBox 
+          <InfoBox
+            isRed
+            current={casesType === 'cases'}
+            onClick = {(e) => {
+                setCasesType('cases')
+                console.log(`InfoBox: ${casesType}`);
+              }
+            }
             title="Confirmed" 
-            total={countryInfo.cases}
-            sub="Today"
-            cases={countryInfo.todayCases} 
+            total={printStat(countryInfo.cases)}
+            cases={printStat(countryInfo.todayCases)} 
+            //onMouseEnter={handleInfoHover(countryInfo.cases)}
           />
 
-          <InfoBox 
+          <InfoBox
+            isPurple 
+            current={casesType === 'active'}
+            onClick = {(e) => {
+                setCasesType('active')
+                console.log(`InfoBox: ${casesType}`);
+              }
+            }
             title="Active" 
-            total={countryInfo.active}
+            total={printStat(countryInfo.active)}
+            cases={printStat(countryInfo.todayCases-countryInfo.todayRecovered-countryInfo.todayDeaths)}
+            //onMouseEnter={handleInfoHover(countryInfo.active)}
           />
 
           <InfoBox 
+            isGreen
+            current={casesType === 'recovered'}
+            onClick = {(e) => {
+                setCasesType('recovered')
+                console.log(`InfoBox: ${casesType}`);
+              }
+            }
             title="Recovered" 
-            total={countryInfo.recovered}
-            sub="Today"
-            cases={countryInfo.todayRecovered} 
+            total={printStat(countryInfo.recovered)}
+            cases={printStat(countryInfo.todayRecovered)}
+            //onMouseEnter={handleInfoHover(countryInfo.recovered)} 
           />
 
           <InfoBox 
+            isGrey 
+            current={casesType === 'deaths'}
+            onClick = {(e) => {
+                setCasesType('deaths')
+                console.log(`InfoBox: ${casesType}`);
+              }
+            }
             title="Deceased" 
-            total={countryInfo.deaths}
-            sub="Today"
-            cases={countryInfo.todayDeaths} 
+            total={printStat(countryInfo.deaths)}
+            cases={printStat(countryInfo.todayDeaths)}
+            //onMouseEnter={handleInfoHover(countryInfo.deaths)} 
           />
       
         </div>
 
-        <Map />  
+        <Map 
+          casesType={casesType}
+          countries={mapCountries} 
+          center={mapCenter} 
+          zoom={mapZoom}
+        />  
       </div>
     
 
       <Card className="app_right">
         <CardContent>
           <h3>Live Cases by Country</h3>
-          <h3>Worldwide New Cases Graph</h3>
+          <Table countries={tableData} />
+          <h3 className="app_graphTitle">Worldwide New {casesType} Graph</h3>
+          <LineGraph className="app_graph" casesType={casesType}/>
         </CardContent>
       </Card>
 
