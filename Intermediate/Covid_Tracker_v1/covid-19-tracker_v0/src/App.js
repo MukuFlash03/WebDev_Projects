@@ -64,7 +64,7 @@ function App() {
   // Fetch country stats on clicking option in dropdown
   const onCountryChange = (event) => {
     const countryCode = event.target.value;
-
+    console.log(countryCode);
     setCountry(countryCode);
 
     const url = countryCode === "worldwide"

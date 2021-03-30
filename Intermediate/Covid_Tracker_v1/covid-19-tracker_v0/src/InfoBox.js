@@ -12,7 +12,7 @@ function InfoBox({ title, total, cases, current, isRed, isPurple, isGreen, isGre
             <CardContent>
                 <Typography className="infoBox_title" color="textSecondary">{title}</Typography>
                 <h2 className={`${isPurple && "infoBox_total--purple"} ${isRed && "infoBox_total--red"} ${isGreen && "infoBox_total--green"} ${isGrey && "infoBox_total--grey"}`}>{total}</h2>
-                <Typography className="infoBox_cases" color="textSecondary">Today:  {cases > 0? '+' : ''}{cases}</Typography>
+                <Typography className="infoBox_cases" color="textSecondary">Today:  {cases}</Typography>
             </CardContent>
         </Card>
     );

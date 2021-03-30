@@ -11,7 +11,7 @@ const casesTypeColors = {
     },
     active: {
       hex: "#542cb3",
-      // rgb: "rgb(125, 215, 29)",
+      //rgb: "rgb(125, 215, 29)",
       // half_op: "rgba(125, 215, 29, 0.5)",
       multiplier: 1200,
     },
@@ -35,7 +35,11 @@ export const sortData = (data) => {
 }
 
 export const printStat = (stat) => 
-  stat ? `+${numeral(stat).format("0.0a")}` : "0";
+  stat 
+  ? (Math.sign(stat) === 1 
+    ? `+${numeral(stat).format("0.0a")}` 
+    : `${numeral(stat).format("0.0a")}`)
+  : "0";
 
   {/*
 export const handleInfoHover = (totalCases) => {
@@ -54,8 +58,10 @@ export const showDataOnMap = (data, casesType) => (
         <Circle 
           center={[country.countryInfo.lat, country.countryInfo.long]} 
           fillOpacity={0.4} 
-          color={casesTypeColors[casesType].hex} 
-          fillColor={casesTypeColors[casesType].hex} 
+          pathOptions={{
+            color: casesTypeColors[casesType].hex,
+            fillColor: casesTypeColors[casesType].hex,
+          }}
           radius={
               Math.sqrt(country[casesType]/10) * casesTypeColors[casesType].multiplier
           }
