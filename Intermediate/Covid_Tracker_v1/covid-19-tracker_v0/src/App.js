@@ -25,7 +25,8 @@ function App() {
   const [mapCenter, setMapCenter] = useState([34.80746, -40.4796]);
   const [mapZoom, setMapZoom] = useState(3);
   const [mapCountries, setMapCountries] = useState([]);
-  const [casesType, setCasesType] = useState('cases');
+  const [casesType, setCasesType] = useState('cases'); // For all including Graph
+  const [caseType, setCaseType] = useState('cases'); // For all excluding Graph to avoid Active card graph
 
 // Fetch worldwide stats for setting stats on initial pageload
   useEffect(() => {
@@ -116,64 +117,67 @@ function App() {
         <div className="app_stats">
           <InfoBox
             isRed
-            current={casesType === 'cases'}
+            current={caseType === 'cases'}
             onClick = {(e) => {
                 setCasesType('cases')
-                console.log(`InfoBox: ${casesType}`);
+                setCaseType('cases')
+                console.log(`InfoBox: ${caseType}`);
               }
             }
             title="Confirmed" 
-            total={printStat(countryInfo.cases)}
-            cases={printStat(countryInfo.todayCases)} 
+            total={printStat(countryInfo.cases, 1)}
+            cases={printStat(countryInfo.todayCases, 0)} 
             //onMouseEnter={handleInfoHover(countryInfo.cases)}
           />
 
           <InfoBox
             isPurple 
-            current={casesType === 'active'}
+            current={caseType === 'active'}
             onClick = {(e) => {
-                setCasesType('active')
-                console.log(`InfoBox: ${casesType}`);
+                setCaseType('active')
+                console.log(`InfoBox: ${caseType}`);
               }
             }
             title="Active" 
-            total={printStat(countryInfo.active)}
-            cases={printStat(countryInfo.todayCases-countryInfo.todayRecovered-countryInfo.todayDeaths)}
+            total={printStat(countryInfo.active, 1)}
+            cases={printStat(countryInfo.todayCases-countryInfo.todayRecovered-countryInfo.todayDeaths, 0)}
             //onMouseEnter={handleInfoHover(countryInfo.active)}
           />
 
           <InfoBox 
             isGreen
-            current={casesType === 'recovered'}
+            current={caseType === 'recovered'}
             onClick = {(e) => {
                 setCasesType('recovered')
-                console.log(`InfoBox: ${casesType}`);
+                setCaseType('recovered')
+                console.log(`InfoBox: ${caseType}`);
               }
             }
             title="Recovered" 
-            total={printStat(countryInfo.recovered)}
-            cases={printStat(countryInfo.todayRecovered)}
+            total={printStat(countryInfo.recovered, 1)}
+            cases={printStat(countryInfo.todayRecovered, 0)}
             //onMouseEnter={handleInfoHover(countryInfo.recovered)} 
           />
 
           <InfoBox 
             isGrey 
-            current={casesType === 'deaths'}
+            current={caseType === 'deaths'}
             onClick = {(e) => {
                 setCasesType('deaths')
-                console.log(`InfoBox: ${casesType}`);
+                setCaseType('deaths')
+                console.log(`InfoBox: ${caseType}`);
               }
             }
             title="Deceased" 
-            total={printStat(countryInfo.deaths)}
-            cases={printStat(countryInfo.todayDeaths)}
+            total={printStat(countryInfo.deaths, 1)}
+            cases={printStat(countryInfo.todayDeaths, 0)}
             //onMouseEnter={handleInfoHover(countryInfo.deaths)} 
           />
       
         </div>
 
         <Map 
-          casesType={casesType}
+          caseType={caseType}
           countries={mapCountries} 
           center={mapCenter} 
           zoom={mapZoom}

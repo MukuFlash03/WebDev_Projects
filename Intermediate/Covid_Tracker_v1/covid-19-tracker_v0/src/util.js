@@ -34,12 +34,14 @@ export const sortData = (data) => {
     return sortedData.sort((a,b) => a.cases > b.cases? -1 : 1);
 }
 
-export const printStat = (stat) => 
-  stat 
-  ? (Math.sign(stat) === 1 
-    ? `+${numeral(stat).format("0.0a")}` 
-    : `${numeral(stat).format("0.0a")}`)
-  : "0";
+export const printStat = (stat, isTotal) => 
+  isTotal
+  ? `${numeral(stat).format("0.0a")}` 
+  : stat 
+    ? (Math.sign(stat) === 1 
+      ? `+${numeral(stat).format("0.0a")}` 
+      : `${numeral(stat).format("0.0a")}`)
+    : "0";
 
   {/*
 export const handleInfoHover = (totalCases) => {
@@ -53,17 +55,17 @@ export const handleInfoHover = (totalCases) => {
   */}
 
 // Draw circles on map with interactive tooltop
-export const showDataOnMap = (data, casesType) => (
+export const showDataOnMap = (data, caseType) => (
     data.map(country => (
         <Circle 
           center={[country.countryInfo.lat, country.countryInfo.long]} 
           fillOpacity={0.4} 
           pathOptions={{
-            color: casesTypeColors[casesType].hex,
-            fillColor: casesTypeColors[casesType].hex,
+            color: casesTypeColors[caseType].hex,
+            fillColor: casesTypeColors[caseType].hex,
           }}
           radius={
-              Math.sqrt(country[casesType]/10) * casesTypeColors[casesType].multiplier
+              Math.sqrt(country[caseType]/10) * casesTypeColors[caseType].multiplier
           }
         >
 
