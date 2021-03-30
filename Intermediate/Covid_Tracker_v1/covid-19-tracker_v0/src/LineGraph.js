@@ -63,16 +63,25 @@ const buildChartData = (data, casesType) => {
   return chartData;
 };
 
-function LineGraph({ casesType = 'cases', ...props }) {
+function LineGraph({ casesType = 'cases', countryCode, ...props }) {
   const [data, setData] = useState({});
+
+  const url = countryCode === "worldwide"
+      ? "https://disease.sh/v3/covid-19/historical/all?lastdays=all" 
+      : `https://disease.sh/v3/covid-19/historical/${countryCode}?lastdays=all`
+    
+      console.log(url);
 
   useEffect(() => {
     const fetchData = async () => {
-      await fetch("https://disease.sh/v3/covid-19/historical/all?lastdays=all")
+      await fetch(url)
         .then((response) => {
           return response.json();
         })
         .then((data) => {
+          data = countryCode === "worldwide" ? data  : data.timeline;
+          console.log(data);
+
           let chartData = buildChartData(data, casesType);
           setData(chartData);
           console.log(chartData);
@@ -81,7 +90,7 @@ function LineGraph({ casesType = 'cases', ...props }) {
     };
 
     fetchData();
-  }, [casesType]);
+  }, [casesType, url, countryCode]);
 
   return (
     <div className={props.className}>

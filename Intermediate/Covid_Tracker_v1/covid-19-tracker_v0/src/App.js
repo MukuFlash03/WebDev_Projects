@@ -33,6 +33,7 @@ function App() {
     .then((response) => response.json())
     .then((data) => {
       setCountryInfo(data);
+      setCountry('worldwide');
     });
   }, []);
 
@@ -81,7 +82,10 @@ function App() {
         setCountry(countryCode);
         setCountryInfo(data);
 
-        setMapCenter([data.countryInfo.lat, data.countryInfo.long]);
+        countryCode === "worldwide"
+          ? setMapCenter([34.80746, -40.4796])
+          : setMapCenter([data.countryInfo.lat, data.countryInfo.long]);
+
         setMapZoom(4);
       })
     };
@@ -181,8 +185,8 @@ function App() {
         <CardContent>
           <h3>Live Cases by Country</h3>
           <Table countries={tableData} />
-          <h3 className="app_graphTitle">Worldwide New {casesType} Graph</h3>
-          <LineGraph className="app_graph" casesType={casesType}/>
+          <h3 className="app_graphTitle">{country === 'worldwide' ? country : countryInfo.country} New {casesType}</h3>
+          <LineGraph className="app_graph" casesType={casesType} countryCode={country}/>
         </CardContent>
       </Card>
 
