@@ -1,7 +1,27 @@
 // https://www.javascripttutorial.net/javascript-dom/javascript-word-counter/
 
+/*
+var requirejs = require('requirejs');
 
-class WordCounter {
+requirejs.config({
+    //Pass the top-level main.js/index.js require
+    //function to requirejs so that node modules
+    //are loaded relative to the top-level JS file.
+    nodeRequire: require
+});
+
+let text = requirejs('./morseDict'); 
+*/
+
+// const morseDict = require(['./morseDict.js']);
+
+
+import { morseDict }  from './morseDict.js';
+console.log(morseDict);
+
+
+export class WordCounter {
+
     constructor(inputText) {
         this.inputText = inputText;
         this.inputText.addEventListener('input', () => {
@@ -11,6 +31,7 @@ class WordCounter {
     count() {
         let wordStat = this.getWordStat(this.inputText.value.trim());
         this.emitEvent(wordStat);
+        console.log(morseDict);
     }
 
     getWordStat(str) {
@@ -36,3 +57,5 @@ class WordCounter {
         this.inputText.dispatchEvent(countEvent);
     }
 }
+
+window.WordCounter = WordCounter;

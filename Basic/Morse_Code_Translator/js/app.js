@@ -1,3 +1,8 @@
+
+// const WordCounter = require(['./morse-translator.js']);
+
+import { WordCounter } from './morse-translator.js';
+
 const inputText = document.querySelector('#text1');
 const statIn = document.querySelector('#stat1');
 
