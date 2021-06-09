@@ -31,7 +31,7 @@ export class WordCounter {
     count() {
         let wordStat = this.getWordStat(this.inputText.value.trim());
         this.emitEvent(wordStat);
-        console.log(morseDict);
+        // console.log(morseDict);
     }
 
     getWordStat(str) {
