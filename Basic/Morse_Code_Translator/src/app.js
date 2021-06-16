@@ -22,4 +22,3 @@ const render = ((event) => {
 });
 
 inputText.addEventListener('count', render);
-

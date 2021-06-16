@@ -5,23 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Morse Code Translator</title>
     <link rel="stylesheet" href="./style.css">
-    <link rel="icon" type="image/png" href="flash.jpg">
+    <link rel="icon" type="image/png" href="./flash.jpg">
 </head>
 <body background="./island.jpg">
 
     <div class="container-fluid">
         <div class="overlay">
             <h1>Morse Code Translator</h1>
+
+            <div id="menu" class="language">
+                <h2>Choose Input Message</h2>
+                <select class="lang">
+                    <option value="english">English</option>
+                    <option value="morse">Morse</option>
+                </select>
+            </div>
+
             <div id="english" class="message">
-                <label for="text1">Enter input message below:</label>
+                <h3>Enter input message below:</h3>
                 <textarea id="text1" class="textbox" rows="10" cols="60"></textarea>
-                <div id="stat1">You've written 0 words and 0 characters.</div>
+                <h3 id="stat1">You've written 0 words and 0 characters.</h3>
             </div>
     
             <div id="morse" class="message">
-                <label for="text2">Cipher message is:</label>
-                <textarea id="text2" class="textbox" rows="10" cols="60"></textarea>
-                <div id="stat2">Cipher message contains 0 characters.</div>
+                <h3>Cipher message is:</h3>
+                <textarea id="text2" class="textbox" rows="10" cols="60" readonly></textarea>
+                <h3>Cipher message contains 0 characters.</h3>
             </div>
 
             <script type="module" src="src/morseDict.js"></script>

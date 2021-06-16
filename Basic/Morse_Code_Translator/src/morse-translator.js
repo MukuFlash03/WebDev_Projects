@@ -36,6 +36,10 @@ export class WordCounter {
         return code.join(" ");
     }
 
+    decodeMessage(cipher) {
+        
+    }
+
     getWordStat(str) {
         let matches = str.match(/\S+/g);
         return {
