@@ -1,16 +1,20 @@
 // https://www.javascripttutorial.net/javascript-dom/javascript-word-counter/
 
-import { morseDict }  from './morseDict.js';
+// import { morseDict }  from './morseDict.js';
 // console.log(morseDict);
 
+const morseDict = require('./morseDict.js').morseDict;
+console.log(morseDict);
 
-export class WordCounter {
+// export class WordCounter {
+class WordCounter {
 
     constructor(inputText) {
         this.inputText = inputText;
         this.inputText.addEventListener('input', () => {
             this.count()
         });
+        
     }
     count() {
         let wordStat = this.getWordStat(this.inputText.value.trim());
@@ -27,17 +31,17 @@ export class WordCounter {
 
     encodeMessage(message) {
         let code = message.map(element => {
-            if (morseDict[element] === undefined)
-                return element;
-            return morseDict[element];
+             if (morseDict[element] === undefined)
+                 return element;
+             return morseDict[element];
             // console.log(element + " : " + morseDict[element]);
         });
         // console.log(code);
         return code.join(" ");
     }
 
-    decodeMessage(cipher) {
-        
+    display(message) {
+        console.log(`Hi, ${message}!`);
     }
 
     getWordStat(str) {
@@ -65,3 +69,5 @@ export class WordCounter {
 }
 
 window.WordCounter = WordCounter;
+
+exports.WordCounter = WordCounter;

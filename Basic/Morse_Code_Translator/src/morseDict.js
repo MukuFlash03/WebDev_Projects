@@ -57,13 +57,11 @@ const dict = {
 }
 
 
-export { dict as morseDict };
+// export { dict as morseDict };
 
-/*
-module.exports = {
-    morseDict: dict
-}
-*/
+
+exports.morseDict = dict;
+
 
 
 // Preparing punctuation morsedict using forEach and map array methods
