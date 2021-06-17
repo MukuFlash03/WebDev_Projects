@@ -32,10 +32,10 @@ const render = ((event) => {
         
     if (inputText.value.trim() === '') {
         event.detail.wordStat.codeLen = 0;
-        console.log(event.detail.wordStat.codeLen);
+        // console.log(event.detail.wordStat.codeLen);
     }
     
-    console.log(inputText.value.trim() === '');
+    // console.log(inputText.value.trim() === '');
     statOut.innerHTML = `<p>Cipher message contains <span class="highlight">${event.detail.wordStat.codeLen} characters </span>.</p>`;
 
     // outputText.innerHTML = inputText.value.toUpperCase();
