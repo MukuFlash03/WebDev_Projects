@@ -23,6 +23,11 @@ const outputText = document.querySelector('#text2');
 const statOut = document.querySelector('#stat2');
 
 const menuSelect = document.getElementById('.menu');
+menuSelect.addEventListener("change", () => {
+    console.log("Inn " + menuSelect.innerText);
+    console.log("tC " + menuSelect.textContent);
+    console.log("Val " + menuSelect.value);
+})
 console.log(menuSelect.value);
 
 
