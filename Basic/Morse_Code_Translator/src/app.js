@@ -22,6 +22,9 @@ const statIn = document.querySelector('#stat1');
 const outputText = document.querySelector('#text2');
 const statOut = document.querySelector('#stat2');
 
+const menuSelect = document.getElementById('.menu');
+console.log(menuSelect.value);
+
 
 new morseTrans.WordCounter(inputText);
 
