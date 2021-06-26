@@ -24,10 +24,14 @@ const statOut = document.querySelector('#stat2');
 
 const menuSelect = document.getElementById('.menu');
 menuSelect.addEventListener('select', () => {
+    alert(this.value);
+}, false) ; 
+    /*
     console.log("Inn " + menuSelect.innerText);
     console.log("tC " + menuSelect.textContent);
     console.log("Val " + menuSelect.value);
-})
+    */
+   
 console.log(menuSelect.value);
 
 
