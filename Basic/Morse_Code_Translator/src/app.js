@@ -36,7 +36,7 @@ console.log("Test " + menuSelect.value);
 new morseTrans.WordCounter(inputText);
 
 const render = ((event) => {
-    statIn.innerHTML = `<p>You've wrote ${event.detail.wordStat.words} words 
+    statIn.innerHTML = `<p>You've written ${event.detail.wordStat.words} words 
         and ${event.detail.wordStat.characters} characters.</p>`;
 
         
@@ -45,7 +45,7 @@ const render = ((event) => {
         // console.log(event.detail.wordStat.codeLen);
     }
     
-    console.log(inputText.value.trim() === '');
+    // console.log(inputText.value.trim() === '');
     statOut.innerHTML = `<p>Cipher message contains 
         ${event.detail.wordStat.codeLen} characters.</p>`;
 
