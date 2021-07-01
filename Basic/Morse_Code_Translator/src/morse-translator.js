@@ -1,16 +1,21 @@
 // https://www.javascripttutorial.net/javascript-dom/javascript-word-counter/
 
-// import { morseDict }  from './morseDict.js';
-// console.log(morseDict);
+// import { engDict }  from './morseDict.js';
+// console.log(engDict);
 
+const engDict = require('./morseDict.js').engDict;
 const morseDict = require('./morseDict.js').morseDict;
-console.log(morseDict);
+
+// console.log(engDict);
+// console.log("Hi");
+// console.log(morseDict);
 
 // export class WordCounter {
 class WordCounter {
 
-    constructor(inputText) {
+    constructor(inputText, menuVal) {
         this.inputText = inputText;
+        this.menuVal = menuVal;
         this.inputText.addEventListener('input', () => {
             this.count()
         });
@@ -18,27 +23,47 @@ class WordCounter {
     }
     count() {
         let wordStat = this.getWordStat(this.inputText.value.trim());
-        // console.log(morseDict);
+        // console.log(engDict);
 
-        let messageSymbols = this.inputText.value.toUpperCase().split("");
-        // console.log(messageSymbols);
-        wordStat.code = this.encodeMessage(messageSymbols);
-        // console.log(wordStat.code);
-        wordStat.codeLen = wordStat.code.length - messageSymbols.length + 1; // total size - no. of spaces
+        if (this.menuVal === 'morse') {
+            // Morse to English Decoding
+            let morseCode = this.inputText.value;
+            wordStat.code = this.decodeMorse(morseCode);
+            wordStat.codeLen = 5;
+        }
+        else if (this.menuVal === 'english') {
+            // English to Morse Encoding
+            let messageSymbols = this.inputText.value.toUpperCase().split("");
+            wordStat.code = this.encodeMessage(messageSymbols);
+            wordStat.codeLen = wordStat.code.length - messageSymbols.length + 1; // total size - no. of spaces
+        }
 
         this.emitEvent(wordStat);
     }
 
     encodeMessage(message) {
         let code = message.map(element => {
-             if (morseDict[element] === undefined)
+             if (engDict[element] === undefined)
                  return element;
-             return morseDict[element];
-            // console.log(element + " : " + morseDict[element]);
+             return engDict[element];
+            // console.log(element + " : " + engDict[element]);
         });
         // console.log(code);
         return code.join(" ");
     }
+
+    decodeMorse(morseCode) {
+        return morseCode
+                .split("/") // get words -> /([/!?.])/g => for multiple delimiters
+                .map(word => word.trim()
+                               .split(" ") // get character code 1 space apart
+                               .map(character => morseDict[character]) // decode Morse code character
+                               .join('')
+                  )
+                  .join(' ') // add spaces between words 
+                  .trim()
+    }
+
 
     display(message) {
         console.log(`Hi, ${message}!`);

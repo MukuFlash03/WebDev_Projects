@@ -23,17 +23,17 @@ const outputText = document.querySelector('#text2');
 const statOut = document.querySelector('#stat2');
 
 const menuSelect = document.querySelector('#menulang');
+
+new morseTrans.WordCounter(inputText, menuSelect.value);
+
 menuSelect.addEventListener('change', () => {
-    alert(this.value);
-    console.log(this.value);
-    console.log("Inn " + menuSelect.innerText);
-    console.log("tC " + menuSelect.textContent);
-    console.log("Val " + menuSelect.value);
+    console.log(menuSelect.value);
+    new morseTrans.WordCounter(inputText, menuSelect.value);
 })
-console.log("Test " + menuSelect.value);
+console.log(menuSelect.value);
 
 
-new morseTrans.WordCounter(inputText);
+
 
 const render = ((event) => {
     statIn.innerHTML = `<p>You've written ${event.detail.wordStat.words} words 

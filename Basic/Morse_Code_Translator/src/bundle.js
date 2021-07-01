@@ -24,17 +24,17 @@ const outputText = document.querySelector('#text2');
 const statOut = document.querySelector('#stat2');
 
 const menuSelect = document.querySelector('#menulang');
+
+new morseTrans.WordCounter(inputText, menuSelect.value);
+
 menuSelect.addEventListener('change', () => {
-    alert(this.value);
-    console.log(this.value);
-    console.log("Inn " + menuSelect.innerText);
-    console.log("tC " + menuSelect.textContent);
-    console.log("Val " + menuSelect.value);
+    console.log(menuSelect.value);
+    new morseTrans.WordCounter(inputText, menuSelect.value);
 })
-console.log("Test " + menuSelect.value);
+console.log(menuSelect.value);
 
 
-new morseTrans.WordCounter(inputText);
+
 
 const render = ((event) => {
     statIn.innerHTML = `<p>You've written ${event.detail.wordStat.words} words 
@@ -67,17 +67,22 @@ inputText.addEventListener('keydown', (event) => {
 },{"./morse-translator.js":2,"./morseDict.js":3}],2:[function(require,module,exports){
 // https://www.javascripttutorial.net/javascript-dom/javascript-word-counter/
 
-// import { morseDict }  from './morseDict.js';
-// console.log(morseDict);
+// import { engDict }  from './morseDict.js';
+// console.log(engDict);
 
+const engDict = require('./morseDict.js').engDict;
 const morseDict = require('./morseDict.js').morseDict;
-console.log(morseDict);
+
+// console.log(engDict);
+// console.log("Hi");
+// console.log(morseDict);
 
 // export class WordCounter {
 class WordCounter {
 
-    constructor(inputText) {
+    constructor(inputText, menuVal) {
         this.inputText = inputText;
+        this.menuVal = menuVal;
         this.inputText.addEventListener('input', () => {
             this.count()
         });
@@ -85,27 +90,47 @@ class WordCounter {
     }
     count() {
         let wordStat = this.getWordStat(this.inputText.value.trim());
-        // console.log(morseDict);
+        // console.log(engDict);
 
-        let messageSymbols = this.inputText.value.toUpperCase().split("");
-        // console.log(messageSymbols);
-        wordStat.code = this.encodeMessage(messageSymbols);
-        // console.log(wordStat.code);
-        wordStat.codeLen = wordStat.code.length - messageSymbols.length + 1; // total size - no. of spaces
+        if (this.menuVal === 'morse') {
+            // Morse to English Decoding
+            let morseCode = this.inputText.value;
+            wordStat.code = this.decodeMorse(morseCode);
+            wordStat.codeLen = 5;
+        }
+        else if (this.menuVal === 'english') {
+            // English to Morse Encoding
+            let messageSymbols = this.inputText.value.toUpperCase().split("");
+            wordStat.code = this.encodeMessage(messageSymbols);
+            wordStat.codeLen = wordStat.code.length - messageSymbols.length + 1; // total size - no. of spaces
+        }
 
         this.emitEvent(wordStat);
     }
 
     encodeMessage(message) {
         let code = message.map(element => {
-             if (morseDict[element] === undefined)
+             if (engDict[element] === undefined)
                  return element;
-             return morseDict[element];
-            // console.log(element + " : " + morseDict[element]);
+             return engDict[element];
+            // console.log(element + " : " + engDict[element]);
         });
         // console.log(code);
         return code.join(" ");
     }
+
+    decodeMorse(morseCode) {
+        return morseCode
+                .split("/") // get words -> /([/!?.])/g => for multiple delimiters
+                .map(word => word.trim()
+                               .split(" ") // get character code 1 space apart
+                               .map(character => morseDict[character]) // decode Morse code character
+                               .join('')
+                  )
+                  .join(' ') // add spaces between words 
+                  .trim()
+    }
+
 
     display(message) {
         console.log(`Hi, ${message}!`);
@@ -139,7 +164,7 @@ window.WordCounter = WordCounter;
 
 exports.WordCounter = WordCounter;
 },{"./morseDict.js":3}],3:[function(require,module,exports){
-const dict = {
+const dictEng = {
     "A": ".-",
     "B": "-...",
     "C": "-.-.",
@@ -197,17 +222,85 @@ const dict = {
     "%": "-..-.-----"
 }
 
+const dictMor = {
+    '.-': 'A',
+    '-...': 'B',
+    '-.-.': 'C',
+    '-..': 'D',
+    '.': 'E',
+    '..-.': 'F',
+    '--.': 'G',
+    '....': 'H',
+    '..': 'I',
+    '.---': 'J',
+    '-.-': 'K',
+    '.-..': 'L',
+    '--': 'M',
+    '-.': 'N',
+    '---': 'O',
+    '.--.': 'P',
+    '--.-': 'Q',
+    '.-.': 'R',
+    '...': 'S',
+    '-': 'T',
+    '..-': 'U',
+    '...-': 'V',
+    '.--': 'W',
+    '-..-': 'X',
+    '-.--': 'Y',
+    '--..': 'Z',
+    '.----': '1',
+    '..---': '2',
+    '...--': '3',
+    '....-': '4',
+    '.....': '5',
+    '-....': '6',
+    '--...': '7',
+    '---..': '8',
+    '----.': '9',
+    '-----': '0',
+    '/': ' ',
+    '.-.-.-': '.',
+    '--..--': ',',
+    '..--..': '?',
+    '-.-.--': '!',
+    '-..-.': '/',
+    '-.--.': ')',
+    '.-...': '&',
+    '---...': ':',
+    '-.-.-.': ';',
+    '-...-': '=',
+    '.-.-.': '+',
+    '-....-': '-',
+    '..--.-': '_',
+    '.-..-.': '"',
+    '.----.': "'",
+    '.--.-.': '@',
+    '-..-.-----': '%'
+}
 
-// export { dict as morseDict };
+// export { dict as morseDict }; // With sourceType: module
 
 
-exports.morseDict = dict;
+ exports.engDict = dictEng;
+ exports.morseDict = dictMor;
+
+
 
 
 
 // Preparing punctuation morsedict using forEach and map array methods
+
 /*
+
 const symbol = [
+    'A','B','C','D','E',
+    'F','G','H','I','J',
+    'K','L','M','N','O',
+    'P','Q','R','S','T',
+    'U','V','W','X','Y','Z',
+    '1','2','3','4','5',
+    '6','7','8','9','0'," ",
     '.', ',', '?', '!', 
     '/', '(', ')', '&', 
     ':', ';', '=', '+', 
@@ -216,6 +309,13 @@ const symbol = [
     ];
     
     const morse = [
+        '.-','-...','-.-.','-..','.',
+        '..-.','--.','....','..','.---',
+        '-.-','.-..','--','-.','---',
+        '.--.','--.-','.-.','...','-',
+        '..-','...-','.--','-..-','-.--','--..',
+        '.----','..---','...--','....-','.....',
+        '-....','--...','---..','----.','-----',"/",
         '.-.-.-', '--..--', '..--..', '-.-.--',
         '-..-.', '-.--.', '-.--.', '.-...', 
         '---...', '-.-.-.', '-...-', '.-.-.', 
@@ -225,16 +325,44 @@ const symbol = [
     
     
     console.log("ForEach");
-    symbol.forEach((element,index) => console.log(`"${element}": "${morse[index]}",`));
+    symbol.forEach((element,index) => console.log(`"${element}": "${morse[index]}",`)); // English to Morse
+    console.log('\n');
+    morse.forEach((element,index) => console.log(`"${element}": "${symbol[index]}",`)); // Morse to English
     
     
-    console.log("Map");
     let symbolDict = {};
+    let morDict = {};
     
+    console.log("\n\nMap");
     symbol.map((item,index) => {
         symbolDict[item] = morse[index];
     });
-    console.log(symbolDict);
-*/
 
+    morse.map((item,index) => {
+        morDict[item] = symbol[index];
+    });
+
+    console.log(symbolDict);
+    console.log('\n');
+    console.log(morDict);
+
+    console.log("\n");
+
+
+
+    // Generating csv list of symbols and morse codes
+
+    let alpha = [];
+    let morAlp = [];
+    for (let i = 48; i <= 57; i++) {
+        alpha.push(`'${String.fromCharCode(i)}'`);
+    }
+    console.log(alpha.join(','));
+    
+    for (let key in dictEng) {
+        morAlp.push(`'${dictEng[key]}'`);
+    };
+    console.log(morAlp.join(','));
+
+    */
 },{}]},{},[1,2,3]);
