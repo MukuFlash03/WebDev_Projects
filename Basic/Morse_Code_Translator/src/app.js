@@ -23,23 +23,21 @@ const outputText = document.querySelector('#text2');
 const statOut = document.querySelector('#stat2');
 
 const menuSelect = document.querySelector('#menulang');
-menuSelect.addEventListener('select', () => {
+menuSelect.addEventListener('change', () => {
     alert(this.value);
-
-    /*
+    console.log(this.value);
     console.log("Inn " + menuSelect.innerText);
     console.log("tC " + menuSelect.textContent);
     console.log("Val " + menuSelect.value);
-    */
-},false)
-console.log(menuSelect.value);
+})
+console.log("Test " + menuSelect.value);
 
 
 new morseTrans.WordCounter(inputText);
 
 const render = ((event) => {
-    statIn.innerHTML = `<p>You've written <span class="highlight">${event.detail.wordStat.words} words</span>
-        and <span class="highlight">${event.detail.wordStat.characters} characters </span>.</p>`;
+    statIn.innerHTML = `<p>You've wrote ${event.detail.wordStat.words} words 
+        and ${event.detail.wordStat.characters} characters.</p>`;
 
         
     if (inputText.value.trim() === '') {
@@ -47,8 +45,9 @@ const render = ((event) => {
         // console.log(event.detail.wordStat.codeLen);
     }
     
-    // console.log(inputText.value.trim() === '');
-    statOut.innerHTML = `<p>Cipher message contains <span class="highlight">${event.detail.wordStat.codeLen} characters </span>.</p>`;
+    console.log(inputText.value.trim() === '');
+    statOut.innerHTML = `<p>Cipher message contains 
+        ${event.detail.wordStat.codeLen} characters.</p>`;
 
     // outputText.innerHTML = inputText.value.toUpperCase();
     outputText.innerHTML = event.detail.wordStat.code;    
