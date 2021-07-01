@@ -18,7 +18,37 @@ const emailEl = document.querySelector('#email');
 const passwordEl = document.querySelector('#password');
 const confirmPasswordEl = document.querySelector('#confirm-password');
 
+const togglePass = document.querySelector('#togglePass1');
+const toggleConfirmPass = document.querySelector('#togglePass2');
+
 const form = document.querySelector('#signup');
+
+// Toggle Password Visibility functions
+togglePass.addEventListener('click', (e) => {
+    // toggle the type attribute
+    if (passwordEl.getAttribute('type') === 'password') {
+        passwordEl.setAttribute('type', "text");
+        togglePass.classList.remove("hide-btn");
+    }
+    else {
+        passwordEl.setAttribute('type', "password");
+        togglePass.classList.add("hide-btn");
+    }
+});
+
+toggleConfirmPass.addEventListener('click', (e) => {
+    // toggle the type attribute
+    if (confirmPasswordEl.getAttribute('type') === 'password') {
+        confirmPasswordEl.setAttribute('type', "text");
+        toggleConfirmPass.classList.remove("hide-btn");
+    }
+    else {
+        confirmPasswordEl.setAttribute('type', "password");
+        toggleConfirmPass.classList.add("hide-btn");
+    }
+});
+
+
 
 // Functions to check input data validity
 

@@ -46,8 +46,19 @@ body {
 
 .form-field {
     margin-bottom: 5px;
-
 }
+
+/* Individual card like field entries styling
+.form-field {
+    margin-bottom: 5px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    max-width: 400px;
+    margin: 10px auto;
+    padding: 16px;
+    width: 300px;
+}
+*/
 
 .form-field label {
     display: block;
@@ -55,17 +66,18 @@ body {
     margin-bottom: 5px;
 }
 
-.form-field input {
+.form-field input[type="password"],
+.form-field input[type="text"] {
     border: solid 2px #f0f0f0;
-    border-radius: 3px;
+    border-radius: 5px;
     padding: 10px;
-    margin-bottom: 5px;
     font-size: 14px;
-    display: block;
+    outline: none;
     width: 100%;
 }
 
-.form-field input:focus {
+.form-field input[type="password"]:focus,
+.form-field input[type="text"]:focus {
     outline: none;
 }
 
@@ -103,4 +115,17 @@ body {
 
 .btn:focus {
     outline: none;
+}
+
+.fa, .far, .fas {
+    display: inline;
+}
+
+.form-field i.hide-btn::before {
+    content: "\f070";
+}
+
+.form-field i {
+    margin-left: -30px;
+    cursor: pointer;
 }
